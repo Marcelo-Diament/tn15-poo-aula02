@@ -1,5 +1,7 @@
 <?php
 require_once("./inc/head.php");
+require_once("./classes/Mulher.php");
+require_once("./classes/Homem.php");
 require_once("./inc/header.php");
 ?>
 <main class="container">
@@ -45,6 +47,31 @@ require_once("./inc/header.php");
 
         <?php else : ?>
 
+            <!-- Se recebermos algum valor no $_POST... -->
+            <?php
+
+                /* 
+                 * IF TERNÁRIO:
+                 * O if ternário consiste em 3 partes:
+                 * 1) Condição
+                 * 2) Caso a condição seja verdadeira
+                 * 3) Caso a condição seja falsa
+                 * Obs.: não podemos definir apenas os passos 1 e 2, é necessário ter o 3o também
+                 * Podemos pensar numa pergunta: condição ? caso true : caso false
+                 */
+                $_POST["sexo"] === "feminino"
+                    ? $usuario = new Mulher($_POST["peso"], $_POST["altura"])
+                    : $usuario = new Homem($_POST["peso"], $_POST["altura"]);
+                
+                // Como ficaria no if tradicional:
+                // if ($_POST["sexo"] === "feminino") {
+                //     $usuario = new Mulher($_POST["peso"], $_POST["altura"]);
+                // } else {
+                //     $usuario = new Homem($_POST["peso"], $_POST["altura"]);
+                // }
+                
+            ?>
+
             <article class="col-12 col-lg-6 mx-auto bg-light rounded p-3">
                 <header class="col-12 my-3 row">
                     <h2 class="col-12">Cálculo de IMC</h2>
@@ -62,10 +89,10 @@ require_once("./inc/header.php");
                         </thead>
                         <tbody>
                             <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <th scope="row"></th>
+                                <td><?= $usuario->peso ?></td>
+                                <td><?= $usuario->altura ?></td>
+                                <td><?= $usuario->imc ?></td>
+                                <th scope="row"><?= $usuario->pesoIdeal() ?></th>
                             </tr>
                         </tbody>
                     </table>
