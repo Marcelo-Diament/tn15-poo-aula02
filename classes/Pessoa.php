@@ -3,7 +3,7 @@
     // Chamando a interface IMC com o require_once()
     require_once("./classes/IMC.php");
 
-    // Criando uma classe abstrata
+    // Criando uma classe abstrata Pessoa que implementa a interface IMC
     abstract class Pessoa implements IMC {
 
         // Definindo as propriedeades Peso e Altura
