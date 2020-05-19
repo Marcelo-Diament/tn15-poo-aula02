@@ -6,7 +6,7 @@
         <div class="container-fluid bg-warning text-black p-3" id="debugModeContainer">
             <div class="row">
                 <h3 class="col-12 mt-3"><i class="fa fa-bug mr-3"></i> DEBUG MODE ON</h3>
-                <?php if ((isset($_SESSION) && $_SESSION) || (isset($_REQUEST) && $_REQUEST)) : ?>
+                <?php if ((isset($_SESSION) && $_SESSION) || (isset($_REQUEST) && $_REQUEST)  || (isset($usuario) && $usuario)  || (isset($poligono) && $poligono)) : ?>
                     <p class="col-12 mb-3" type="button" data-toggle="collapse" data-target="#debugDetails" aria-expanded="false" aria-controls="debugDetails"><b>Confira as superglobais existentes</b> <i class="fa fa-chevron-down ml-1"></i></p>
                     <div class="collapse col-12 row" id="debugDetails">
                         <div class="col-12 d-flex justify-content-start align-items-start flex-row flex-nowrap">
@@ -24,6 +24,16 @@
                             if (isset($_SESSION) && $_SESSION) :
                                 echo "<div class='col-12 col-md-4'><h5>SESSION</h5><pre>";
                                 var_dump($_SESSION);
+                                echo "</pre></div>";
+                            endif;
+                            if (isset($usuario) && $usuario) :
+                                echo "<div class='col-12 col-md-4'><h5>POST</h5><pre>";
+                                var_dump($usuario);
+                                echo "</pre></div>";
+                            endif;
+                            if (isset($poligono) && $poligono) :
+                                echo "<div class='col-12 col-md-4'><h5>SESSION</h5><pre>";
+                                var_dump($poligono);
                                 echo "</pre></div>";
                             endif;
                             ?>
