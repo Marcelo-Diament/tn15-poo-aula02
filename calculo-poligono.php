@@ -1,5 +1,9 @@
 <?php
 require_once("./inc/head.php");
+require_once("./classes/Circulo.php");
+require_once("./classes/Losango.php");
+require_once("./classes/Retangulo.php");
+require_once("./classes/Triangulo.php");
 require_once("./inc/header.php");
 ?>
 <main class="container">
@@ -12,11 +16,6 @@ require_once("./inc/header.php");
                     <h2 class="col-12">Calculadora Geométrica</h2>
                     <p class="col-12">Preencha o formulário e descubra o perímetro e a área</p>
                 </header>
-                <?php
-                    require_once("./classes/Circulo.php");
-                    $circulo = new Circulo("Círculo",[4]);
-                    echo $circulo->getRaio();
-                ?>
                 <form class="col-12" action="" method="post" id="calcularPoligonoForm">
                     <div class="form-group-row mb-3">
                         <label for="poligono">Polígono</label>
@@ -33,6 +32,32 @@ require_once("./inc/header.php");
 
         <?php else : ?>
 
+            <?php
+            
+                switch ( $_POST["poligono"] ) {
+                    case "Círculo" :
+                        $poligono = new Circulo($_POST["poligono"], [$_POST["raio"]]);
+                        $medidaNome = "Raio";
+                    break;
+                    case "Losango" :
+                        $poligono = new Losango($_POST["poligono"],[$_POST["diagonal1"], $_POST["diagonal2"]]);
+                        $medidaNome = "Diagonais";
+                    break;
+                    case "Retângulo" :
+                        $poligono = new Retangulo($_POST["poligono"], [$_POST["lado1"], $_POST["lado2"]]);
+                        $medidaNome = "Lados";
+                    break;
+                    case "Triângulo" :
+                        $poligono = new Triangulo($_POST["poligono"], [$_POST["lado1"], $_POST["lado2"], $_POST["lado3"]]);
+                        $medidaNome = "Lados";
+                    break;
+                    default:
+                        echo "Ops! Não encontramos esse polígno! Mal aí!";
+                    break;
+                }
+
+            ?>
+
             <article class="col-12 col-lg-6 mx-auto bg-light rounded p-3">
                 <header class="col-12 my-3 row">
                     <h2 class="col-12">Cálculo de Polígono</h2>
@@ -43,17 +68,29 @@ require_once("./inc/header.php");
                         <thead class="thead-dark">
                             <tr>
                                 <th scope="col">Polígono</th>
-                                <th scope="col">Medida</th>
+                                <th scope="col"><?= $medidaNome ?></th>
                                 <th scope="col">Perímetro</th>
                                 <th scope="col">Área</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td><?= $poligono->forma ?></td>
+                                <td>
+                                    <?php
+
+                                        $medidas = $poligono->getMedidas();
+                                        $i = 0; // Necessário usar o $i pois podemos receber valores iguais, o que impede o array_search de retornar como esperado de forma ágil (poderíamos usar um loop for também)
+                                        foreach($medidas as $medida) :
+                                            echo array_key_last($medidas) === $i
+                                                ? $medida
+                                                : $medida . ", ";
+                                            $i++;
+                                        endforeach;
+                                    ?>
+                                </td>
+                                <td><?= $poligono->calcularPerimetro() ?></td>
+                                <td><?= $poligono->calcularArea() ?></td>
                             </tr>
                         </tbody>
                     </table>
