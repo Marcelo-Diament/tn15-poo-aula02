@@ -12,6 +12,11 @@ require_once("./inc/header.php");
                     <h2 class="col-12">Calculadora Geométrica</h2>
                     <p class="col-12">Preencha o formulário e descubra o perímetro e a área</p>
                 </header>
+                <?php
+                    require_once("./classes/Circulo.php");
+                    $circulo = new Circulo("Círculo",[4]);
+                    echo $circulo->getRaio();
+                ?>
                 <form class="col-12" action="" method="post" id="calcularPoligonoForm">
                     <div class="form-group-row mb-3">
                         <label for="poligono">Polígono</label>
